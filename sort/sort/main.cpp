@@ -59,7 +59,6 @@ struct AddrBook {
 /* ------------------------------------------------------------------------- */
 /* プロトタイプ宣言															 */
 /* ------------------------------------------------------------------------- */
-void QuickSort(struct AddrBook *, SINT iLeft, SINT iRight);
 void MergeSort(struct AddrBook *, struct AddrBook *, SINT iLeft, SINT iRight, SINT, SINT);
 SCHR *Strtok(SCHR *cStr, const SCHR cChar);
 
@@ -159,9 +158,10 @@ int main(int argc, char* argv[])
 
 	printf("ソートを行いますキーを選択してください(最大3段階)\n");
 	for (Cnt = 0; Cnt < 3; Cnt++) {
-		printf("\n|1.氏名　　|2.カナ(苗字)|3.カナ(名前)　　| 4.性別　　| 5.血液型| 6.生年月日  |\n");
+		printf("\n%d段階目のソートを選択\n\n",Cnt+1);
+		printf("|1.氏名　　|2.カナ(苗字)|3.カナ(名前)　　| 4.性別　　| 5.血液型| 6.生年月日  |\n");
 		printf("|7.電話番号|8.携帯電話　|9.メールアドレス|10.郵便番号|11.住所　|12.住所(カナ)|\n");
-		printf("|END(999)  |\n\n");
+		printf("|終了(999) |\n\n");
 		while (1) {
 			printf("数値でを入力してください\n >");
 			rewind(stdin);
@@ -195,7 +195,6 @@ int main(int argc, char* argv[])
 
 	/* ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  */
 	/* ソート関数の呼び出し													 */
-	//QuickSort(cPtr, 0, SIZE - 1);
 	for (; Cnt > 0; Cnt--) {
 		MergeSort(cPtr, pTemp, 0, SIZE - 1, iChoice[Cnt-1], iChoice[Cnt+2]);
 	}
@@ -355,38 +354,6 @@ void MergeSort(struct AddrBook *cPtr, struct AddrBook *pTemp, SINT iLeft, SINT i
 		default:
 			break;
 		}
-}
-
-
-/* ------------------------------------------------------------------------- */
-/* 関数名	: QuickSort			 											 */
-/* 機能名	: クイックソート												 */
-/* 機能概要	: クイックソートをして値を返します								 */
-/* 作成日	: 2018/05/12		中田  桂介		新規作成					 */
-/* ------------------------------------------------------------------------- */
-void QuickSort(struct AddrBook *cPtr, SINT iLeft, SINT iRight)
-{
-	struct AddrBook num;
-	SINT iLoopCnt, iLast;
-
-	if (iLeft >= iRight)
-		return;
-
-	iLast = iLeft;
-	for (iLoopCnt = iLeft+1; iLoopCnt <= iRight; iLoopCnt++) {
-		if (strcmp(cPtr[iLoopCnt].PostalCode , cPtr[iLeft].PostalCode) > 0) {
-			iLast++;
-			num = cPtr[iLast];
-			cPtr[iLast] = cPtr[iLoopCnt];
-			cPtr[iLoopCnt] = num;
-		}
-	}
-	num = cPtr[iLeft];
-	cPtr[iLeft] = cPtr[iLast];
-	cPtr[iLast] = num;
-
-	QuickSort(cPtr, iLeft, iLast - 1);
-	QuickSort(cPtr, iLast + 1, iRight);
 }
 
 /* ------------------------------------------------------------------------- */
